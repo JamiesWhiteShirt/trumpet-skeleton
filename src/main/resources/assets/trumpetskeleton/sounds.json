@@ -1,0 +1,10 @@
+{
+  "entity.trumpet_skeleton.ambient": {
+    "subtitle": "subtitles.entity.trumpetskeleton.trumpet_skeleton.ambient",
+    "sounds": [ "trumpetskeleton:doot_doot" ]
+  },
+  "item.trumpet.use": {
+    "subtitle": "subtitles.item.trumpetskeleton.trumpet.use",
+    "sounds": [ "trumpetskeleton:doot_doot" ]
+  }
+}

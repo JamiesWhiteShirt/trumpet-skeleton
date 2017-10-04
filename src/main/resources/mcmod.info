@@ -1,0 +1,16 @@
+[
+{
+  "modid": "trumpetskeleton",
+  "name": "Trumpet Skeleton",
+  "description": "The sound of trumpets echoes through the night...",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["JamiesWhiteShirt"],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
