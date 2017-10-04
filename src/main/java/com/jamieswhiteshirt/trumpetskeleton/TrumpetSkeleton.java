@@ -32,12 +32,13 @@ import java.util.List;
 @Mod(
         modid = TrumpetSkeleton.MODID,
         version = TrumpetSkeleton.VERSION,
-        acceptedMinecraftVersions = "[1.12,)",
+        acceptedMinecraftVersions = "[1.12.2,1.13)",
+        dependencies = "required-after:forge@[14.23.0.2487,)",
         name = "Trumpet Skeleton"
 )
 public class TrumpetSkeleton {
     public static final String MODID = "trumpetskeleton";
-    public static final String VERSION = "1.12-1.0.0.0";
+    public static final String VERSION = "1.12.2-1.0.0.0";
 
     public static final ResourceLocation ENTITIES_TRUMPET_SKELETON_LOOT_TABLE = new ResourceLocation(MODID, "entities/trumpet_skeleton");
 
