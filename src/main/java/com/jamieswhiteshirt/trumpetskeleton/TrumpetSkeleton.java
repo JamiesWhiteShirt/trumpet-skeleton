@@ -32,7 +32,7 @@ import java.util.List;
 @Mod(
         modid = TrumpetSkeleton.MODID,
         version = TrumpetSkeleton.VERSION,
-        acceptedMinecraftVersions = "1.12",
+        acceptedMinecraftVersions = "[1.12,)",
         name = "Trumpet Skeleton"
 )
 public class TrumpetSkeleton {
