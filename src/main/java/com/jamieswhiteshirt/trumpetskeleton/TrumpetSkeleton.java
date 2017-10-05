@@ -7,7 +7,6 @@ import com.jamieswhiteshirt.trumpetskeleton.common.entity.EntityTrumpetSkeleton;
 import com.jamieswhiteshirt.trumpetskeleton.common.item.ItemTrumpet;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
@@ -32,8 +31,8 @@ import java.util.List;
 @Mod(
         modid = TrumpetSkeleton.MODID,
         version = TrumpetSkeleton.VERSION,
-        acceptedMinecraftVersions = "[1.12.2,1.13)",
-        dependencies = "required-after:forge@[14.23.0.2487,)",
+        acceptedMinecraftVersions = "[1.12,1.13)",
+        dependencies = "required-after:forge@[14.21.1.2387,)",
         name = "Trumpet Skeleton"
 )
 public class TrumpetSkeleton {
@@ -75,15 +74,11 @@ public class TrumpetSkeleton {
 
     @SubscribeEvent
     public void registerEntityEntries(RegistryEvent.Register<EntityEntry> event) {
-        event.getRegistry().registerAll(
-                EntityEntryBuilder.create()
-                        .entity(EntityTrumpetSkeleton.class)
-                        .id(new ResourceLocation(MODID, "trumpet_skeleton"), 0)
-                        .name("trumpetskeleton.TrumpetSkeleton")
-                        .tracker(80, 3, false)
-                        .egg(0xC1C1C1, 0xFCFC00)
-                        .spawn(EnumCreatureType.MONSTER, 25, 4, 4, ForgeRegistries.BIOMES.getValues())
-                        .build()
+        EntityRegistry.registerModEntity(
+                new ResourceLocation(MODID, "trumpet_skeleton"), EntityTrumpetSkeleton.class, "trumpetskeleton.TrumpetSkeleton", 0,
+                this,
+                80, 3, false,
+                0xC1C1C1, 0xFCFC00
         );
     }
 
