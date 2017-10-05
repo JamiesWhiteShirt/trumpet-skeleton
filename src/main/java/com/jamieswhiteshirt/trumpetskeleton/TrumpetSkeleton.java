@@ -37,7 +37,7 @@ import java.util.List;
 )
 public class TrumpetSkeleton {
     public static final String MODID = "trumpetskeleton";
-    public static final String VERSION = "1.12.2-1.0.0.1";
+    public static final String VERSION = "1.12-1.0.0.1";
 
     public static final ResourceLocation ENTITIES_TRUMPET_SKELETON_LOOT_TABLE = new ResourceLocation(MODID, "entities/trumpet_skeleton");
 
