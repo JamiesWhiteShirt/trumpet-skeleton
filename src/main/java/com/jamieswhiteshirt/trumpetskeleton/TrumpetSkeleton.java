@@ -5,6 +5,7 @@ import com.jamieswhiteshirt.trumpetskeleton.common.TrumpetSkeletonItems;
 import com.jamieswhiteshirt.trumpetskeleton.common.TrumpetSkeletonSoundEvents;
 import com.jamieswhiteshirt.trumpetskeleton.common.entity.EntityTrumpetSkeleton;
 import com.jamieswhiteshirt.trumpetskeleton.common.item.ItemTrumpet;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -60,7 +61,7 @@ public class TrumpetSkeleton {
     @SubscribeEvent
     public void registerItems(RegistryEvent.Register<Item> event) {
         event.getRegistry().registerAll(
-                new ItemTrumpet().setUnlocalizedName("trumpetskeleton.trumpet").setRegistryName(MODID, "trumpet")
+                new ItemTrumpet().setUnlocalizedName("trumpetskeleton.trumpet").setRegistryName(MODID, "trumpet").setCreativeTab(CreativeTabs.MISC)
         );
     }
 
