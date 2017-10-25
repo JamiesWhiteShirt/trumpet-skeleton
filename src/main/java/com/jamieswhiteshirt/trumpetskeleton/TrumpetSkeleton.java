@@ -8,6 +8,7 @@ import com.jamieswhiteshirt.trumpetskeleton.common.item.ItemTrumpet;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
@@ -15,6 +16,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.Biome;
 import net.minecraft.world.storage.loot.LootTableList;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
@@ -80,6 +82,13 @@ public class TrumpetSkeleton {
                 this,
                 80, 3, false,
                 0xC1C1C1, 0xFCFC00
+        );
+        List<Biome> biomes = ForgeRegistries.BIOMES.getValues();
+        EntityRegistry.addSpawn(
+                EntityTrumpetSkeleton.class,
+                25, 4, 4,
+                EnumCreatureType.MONSTER,
+                biomes.toArray(new Biome[biomes.size()])
         );
     }
 
