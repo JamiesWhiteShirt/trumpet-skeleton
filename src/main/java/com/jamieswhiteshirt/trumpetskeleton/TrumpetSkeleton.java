@@ -5,10 +5,12 @@ import com.jamieswhiteshirt.trumpetskeleton.common.TrumpetSkeletonItems;
 import com.jamieswhiteshirt.trumpetskeleton.common.TrumpetSkeletonSoundEvents;
 import com.jamieswhiteshirt.trumpetskeleton.common.entity.EntityTrumpetSkeleton;
 import com.jamieswhiteshirt.trumpetskeleton.common.item.ItemTrumpet;
+import net.minecraft.client.renderer.EntityRenderer;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EnumCreatureType;
+import net.minecraft.entity.monster.EntitySkeleton;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
@@ -18,6 +20,7 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.storage.loot.LootTableList;
+import net.minecraftforge.common.ForgeChunkManager;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.entity.PlaySoundAtEntityEvent;
@@ -30,6 +33,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Mod(
         modid = TrumpetSkeleton.MODID,
@@ -83,13 +87,13 @@ public class TrumpetSkeleton {
                 80, 3, false,
                 0xC1C1C1, 0xFCFC00
         );
-        List<Biome> biomes = ForgeRegistries.BIOMES.getValues();
-        EntityRegistry.addSpawn(
-                EntityTrumpetSkeleton.class,
-                25, 4, 4,
-                EnumCreatureType.MONSTER,
-                biomes.toArray(new Biome[biomes.size()])
-        );
+        for (Biome biome : ForgeRegistries.BIOMES.getValues()) {
+            for (Biome.SpawnListEntry entry : biome.getSpawnableList(EnumCreatureType.MONSTER)) {
+                if (entry.entityClass == EntitySkeleton.class) {
+                    EntityRegistry.addSpawn(EntityTrumpetSkeleton.class, entry.itemWeight / 4, entry.minGroupCount, entry.maxGroupCount, EnumCreatureType.MONSTER, biome);
+                }
+            }
+        }
     }
 
     @SubscribeEvent
