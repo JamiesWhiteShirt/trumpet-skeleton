@@ -7,6 +7,7 @@ import net.minecraft.entity.monster.AbstractSkeleton;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.DifficultyInstance;
@@ -19,9 +20,10 @@ public class EntityTrumpetSkeleton extends AbstractSkeleton {
         super(worldIn);
     }
 
+    @Nullable
     @Override
-    protected SoundEvent getStepSound() {
-        return SoundEvents.ENTITY_SKELETON_STEP;
+    protected ResourceLocation getLootTable() {
+        return TrumpetSkeleton.ENTITIES_TRUMPET_SKELETON_LOOT_TABLE;
     }
 
     @Override
@@ -30,14 +32,33 @@ public class EntityTrumpetSkeleton extends AbstractSkeleton {
     }
 
     @Override
+    protected SoundEvent getHurtSound(DamageSource damageSourceIn)
+    {
+        return SoundEvents.ENTITY_SKELETON_HURT;
+    }
+
+    @Override
+    protected SoundEvent getDeathSound()
+    {
+        return SoundEvents.ENTITY_SKELETON_DEATH;
+    }
+
+    @Override
+    protected SoundEvent getStepSound() {
+        return SoundEvents.ENTITY_SKELETON_STEP;
+    }
+
+    @Override
     protected void setEquipmentBasedOnDifficulty(DifficultyInstance difficulty) {
         super.setEquipmentBasedOnDifficulty(difficulty);
         setItemStackToSlot(EntityEquipmentSlot.MAINHAND, new ItemStack(TrumpetSkeletonItems.TRUMPET));
     }
 
-    @Nullable
     @Override
-    protected ResourceLocation getLootTable() {
-        return TrumpetSkeleton.ENTITIES_TRUMPET_SKELETON_LOOT_TABLE;
+    public void playLivingSound() {
+        super.playLivingSound();
+        if (isSwingingArms()) {
+            TrumpetSkeleton.scare(world, this);
+        }
     }
 }

@@ -15,6 +15,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
@@ -97,6 +98,21 @@ public class TrumpetSkeleton {
         }
     }
 
+    public static void scare(World world, EntityLivingBase user) {
+        if (!world.isRemote) {
+            List<EntityLivingBase> spookedEntities = world.getEntitiesWithinAABB(EntityLivingBase.class, user.getEntityBoundingBox().grow(10.0D));
+            for (EntityLivingBase spookedEntity : spookedEntities) {
+                if (spookedEntity == user) continue;
+                double deltaX = spookedEntity.posX - user.posX + world.rand.nextDouble() - world.rand.nextDouble();
+                double deltaZ = spookedEntity.posZ - user.posZ + world.rand.nextDouble() - world.rand.nextDouble();
+                double distance = Math.sqrt(deltaX * deltaX + deltaZ * deltaZ);
+                spookedEntity.velocityChanged = true;
+                spookedEntity.addVelocity(0.5 * deltaX / distance, 5.0D / (10.0D + distance), 0.5 * deltaZ / distance);
+                spookedEntity.setRevengeTarget(user);
+            }
+        }
+    }
+
     @SubscribeEvent
     public void onActiveItemUseTick(LivingEntityUseItemEvent.Tick event) {
         ItemStack stack = event.getItem();
@@ -104,22 +120,9 @@ public class TrumpetSkeleton {
             if (event.getDuration() == stack.getMaxItemUseDuration() - 10) {
                 EntityLivingBase user = event.getEntityLiving();
                 World world = user.world;
-
                 user.playSound(TrumpetSkeletonSoundEvents.ITEM_TRUMPET_USE, 1.0F, 0.9F + world.rand.nextFloat() * 0.2F);
-                if (!world.isRemote) {
-                    List<EntityLivingBase> spookedEntities = world.getEntitiesWithinAABB(EntityLivingBase.class, user.getEntityBoundingBox().grow(10.0D));
-                    for (EntityLivingBase spookedEntity : spookedEntities) {
-                        if (spookedEntity == user) continue;
-                        double deltaX = user.posX - spookedEntity.posX;
-                        double deltaZ = user.posZ - spookedEntity.posZ;
-                        double distance = Math.sqrt(deltaX * deltaX + deltaZ * deltaZ);
-                        if (distance > 0.25D) {
-                            spookedEntity.knockBack(user, 0.5F, deltaX / distance, deltaZ / distance);
-                        }
-                        spookedEntity.setRevengeTarget(user);
-                    }
-                    stack.damageItem(1, user);
-                }
+                scare(world, user);
+                stack.damageItem(1, user);
             } else if (event.getDuration() <= stack.getMaxItemUseDuration() - 15) {
                 event.setCanceled(true);
             }
